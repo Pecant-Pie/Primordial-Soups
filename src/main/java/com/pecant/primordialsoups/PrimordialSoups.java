@@ -1,4 +1,4 @@
-package com.example.primordialsoups;
+package com.pecant.primordialsoups;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
