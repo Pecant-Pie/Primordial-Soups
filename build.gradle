@@ -126,15 +126,12 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
-//    maven { // JEI
-//        url "https://maven.blamejared.com"
-//    }
-//    maven { // Jade
-//        url "https://www.cursemaven.com"
-//        content {
-//            includeGroup "curse.maven"
-//        }
-//    }
+    maven { // JEI
+        url "https://maven.blamejared.com"
+    }
+    maven { // The One Probe
+        url "https://maven.k-4u.nl"
+    }
 }
 
 dependencies {
@@ -147,15 +144,15 @@ dependencies {
 
     // Example mod dependency with JEI - using fg.deobf() ensures the dependency is remapped to your development mappings
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-//     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
-//     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
-//     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
+     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
+     compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}")
+     runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")
 
 
-    // Visit https://www.curseforge.com/minecraft/mc-mods/jade/files/all?filter-status=1&filter-game-version=2020709689%3A7499
-    // to get the latest version's jade_id
-//    runtimeOnly "curse.maven:jade-324717:${jade_id}"
-
+    // The One Probe
+    implementation fg.deobf(project.dependencies.create("mcjty.theoneprobe:theoneprobe:${top_version}") {
+        transitive = false
+    })
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
     // The group id is ignored when searching -- in this case, it is "blank"
