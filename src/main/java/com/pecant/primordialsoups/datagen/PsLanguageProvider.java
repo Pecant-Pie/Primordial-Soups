@@ -14,5 +14,7 @@ public class PsLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add(Registration.CROCK_BLOCK.get(), "Iron Crock");
+        add(Registration.IRON_SOUP_BUCKET.get(), "Bucket of Iron Soup");
+        add(Registration.STOCK_BUCKET.get(), "Bucket of Stock");
     }
 }

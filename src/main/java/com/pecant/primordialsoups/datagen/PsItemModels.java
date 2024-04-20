@@ -15,5 +15,7 @@ public class PsItemModels extends ItemModelProvider {
     @Override
     protected void registerModels() {
         withExistingParent(Registration.CROCK_BLOCK.getId().getPath(), modLoc("block/iron_crock"));
+        basicItem(Registration.IRON_SOUP_BUCKET.getId());
+        basicItem(Registration.STOCK_BUCKET.getId());
     }
 }
