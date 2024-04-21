@@ -5,7 +5,9 @@ A mod for minecraft 1.20.1
 
 # Current Content
 
-Nothing yet!
+Iron Soup and Stock fluids are implemented.
+Iron Soup dries into iron ore (takes about a minute on average)
+Stock will be a crafting ingredient for all ore soups once the crock pots are implemented.
 
 # Planned Content
 
