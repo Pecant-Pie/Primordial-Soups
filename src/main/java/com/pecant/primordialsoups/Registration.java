@@ -4,12 +4,14 @@ import com.pecant.primordialsoups.blocks.CrockBlock;
 import com.pecant.primordialsoups.blocks.CrockBlockEntity;
 import com.pecant.primordialsoups.fluid.ModFluidTypes;
 import com.pecant.primordialsoups.fluid.ModFluids;
+import com.pecant.primordialsoups.menu.CrockBlockMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +21,7 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -33,6 +36,8 @@ public class Registration {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, MODID);
+    public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PrimordialSoups.MODID);
+
 
     public static final RegistryObject<Block> CROCK_BLOCK = BLOCKS.register("iron_crock", () -> new CrockBlock());
     public static final RegistryObject<Item> CROCK_BLOCK_ITEM = ITEMS.register("iron_crock", () -> new BlockItem(CROCK_BLOCK.get(), new Item.Properties()));
@@ -53,11 +58,15 @@ public class Registration {
                     new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)));
 
 
+    public static final RegistryObject<MenuType<CrockBlockMenu>> CROCK_BLOCK_MENU = MENU_TYPES.register("crock_menu",
+            () -> IForgeMenuType.create((window, inv, data) -> new CrockBlockMenu(window, inv.player, data.readBlockPos())));
+
 
     public static void init(IEventBus modEventBus) {
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         BLOCK_ENTITIES.register(modEventBus);
+        MENU_TYPES.register(modEventBus);
         ModFluids.register(modEventBus);
         ModFluidTypes.register(modEventBus);
     }

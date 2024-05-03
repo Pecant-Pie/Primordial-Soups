@@ -10,6 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import com.pecant.primordialsoups.fluid.ModFluids;
+import net.minecraft.client.gui.screens.MenuScreens;
 
 import static com.pecant.primordialsoups.PrimordialSoups.MODID;
 
@@ -25,5 +26,12 @@ public class ClientSetup {
     public static void onClientSetup(FMLClientSetupEvent event) {
         ItemBlockRenderTypes.setRenderLayer(ModFluids.SOURCE_IRON_SOUP.get(), RenderType.translucent());
         ItemBlockRenderTypes.setRenderLayer(ModFluids.FLOWING_IRON_SOUP.get(), RenderType.translucent());
+    }
+
+    @SubscribeEvent
+    public static void clientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            MenuScreens.register(Registration.CROCK_BLOCK_MENU.get(), CrockBlockScreen::new);
+        });
     }
 }
