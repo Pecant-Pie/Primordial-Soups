@@ -21,16 +21,16 @@ public class ModFluidTypes {
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, PrimordialSoups.MODID);
 
-    public static final RegistryObject<FluidType> IRON_SOUP_FLUID_TYPE = registerSoup(0xF0601100);
+    public static final RegistryObject<FluidType> IRON_SOUP_FLUID_TYPE = registerSoup("iron_soup", 0xF0601100);
 
 
-    public static final RegistryObject<FluidType> STOCK_FLUID_TYPE = register("stock_soup_fluid",
+    public static final RegistryObject<FluidType> STOCK_FLUID_TYPE = register("stock_fluid",
             new ResourceLocation("block/water_still"),
             new ResourceLocation("block/water_flow"), OVERLAY, 0x80AAAA00);
 
 
-    public static RegistryObject<FluidType> registerSoup(int tintColor) {
-        return register("iron_soup_fluid", new ResourceLocation("block/lava_still"),
+    public static RegistryObject<FluidType> registerSoup(String name, int tintColor) {
+        return register(name + "_fluid", new ResourceLocation("block/lava_still"),
                 new ResourceLocation("block/lava_flow"),
                 OVERLAY,
                 tintColor);

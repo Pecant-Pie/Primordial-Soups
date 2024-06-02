@@ -28,9 +28,9 @@ public class ModFluids {
     public static final RegistryObject<FlowingFluid> FLOWING_IRON_SOUP = FLUIDS.register("flowing_iron_soup",
             () -> new SoupFlowingFluid.Flowing(ModFluids.IRON_SOUP_FLUID_PROPERTIES, () -> Blocks.IRON_ORE));
 
-    public static final RegistryObject<FlowingFluid> SOURCE_STOCK = FLUIDS.register("brine_fluid",
+    public static final RegistryObject<FlowingFluid> SOURCE_STOCK = FLUIDS.register("stock_fluid",
             () -> new ForgeFlowingFluid.Source(ModFluids.STOCK_FLUID_PROPERTIES));
-    public static final RegistryObject<FlowingFluid> FLOWING_STOCK = FLUIDS.register("flowing_brine",
+    public static final RegistryObject<FlowingFluid> FLOWING_STOCK = FLUIDS.register("flowing_stock",
             () -> new ForgeFlowingFluid.Flowing(ModFluids.STOCK_FLUID_PROPERTIES));
 
 
