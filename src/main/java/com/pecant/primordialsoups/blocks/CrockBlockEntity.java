@@ -30,7 +30,7 @@ import static com.pecant.primordialsoups.Registration.CROCK_BLOCK_ENTITY;
 
 public class CrockBlockEntity extends BlockEntity implements MenuProvider {
 
-    private static Component TITLE = Component.translatable("block.primordialsoups.iron_crock");
+    private static Component TITLE = Component.translatable("block.primordialsoups.crock");
     public static final String ITEMS_TAG = "Inventory";
 
     public static int SLOT_COUNT = 4;
