@@ -157,23 +157,4 @@ public class PsBlockStates extends BlockStateProvider {
     }
 
 
-    private VariantBlockStateBuilder directionBlock(Block block, BiConsumer<BlockState, ConfiguredModel.Builder<?>> model) {
-        VariantBlockStateBuilder builder = getVariantBuilder(block);
-        builder.forAllStates(state -> {
-            ConfiguredModel.Builder<?> bld = ConfiguredModel.builder();
-            model.accept(state, bld);
-            applyRotationBld(bld, state.getValue(BlockStateProperties.HORIZONTAL_FACING));
-            return bld.build();
-        });
-        return builder;
-    }
-
-    private void applyRotationBld(ConfiguredModel.Builder<?> builder, Direction direction) {
-        switch (direction) {
-            case SOUTH -> builder.rotationY(180);
-            case WEST -> builder.rotationY(270);
-            case EAST -> builder.rotationY(90);
-            default -> { }
-        }
-    }
 }

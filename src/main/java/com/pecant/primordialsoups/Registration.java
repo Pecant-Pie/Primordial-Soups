@@ -36,9 +36,9 @@ public class Registration {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, PrimordialSoups.MODID);
 
 
-    public static final RegistryObject<CrockBlock> CROCK_BLOCK = BLOCKS.register("iron_crock", () -> new CrockBlock());
-    public static final RegistryObject<Item> CROCK_BLOCK_ITEM = ITEMS.register("iron_crock", () -> new BlockItem(CROCK_BLOCK.get(), new Item.Properties()));
-    public static final RegistryObject<BlockEntityType<CrockBlockEntity>> CROCK_BLOCK_ENTITY = BLOCK_ENTITIES.register("iron_crock",
+    public static final RegistryObject<CrockBlock> CROCK_BLOCK = BLOCKS.register("crock", () -> new CrockBlock());
+    public static final RegistryObject<Item> CROCK_BLOCK_ITEM = ITEMS.register("crock", () -> new BlockItem(CROCK_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<CrockBlockEntity>> CROCK_BLOCK_ENTITY = BLOCK_ENTITIES.register("crock",
             () -> BlockEntityType.Builder.of(CrockBlockEntity::new, CROCK_BLOCK.get()).build(null));
 
 
@@ -83,15 +83,15 @@ public class Registration {
     private static DispenseItemBehavior bucketBehavior = new DefaultDispenseItemBehavior() {
         private final DefaultDispenseItemBehavior defaultDispenseItemBehavior = new DefaultDispenseItemBehavior();
 
-        public ItemStack execute(BlockSource p_123561_, ItemStack p_123562_) {
-            DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem)p_123562_.getItem();
-            BlockPos blockpos = p_123561_.getPos().relative((Direction)p_123561_.getBlockState().getValue(DispenserBlock.FACING));
-            Level level = p_123561_.getLevel();
-            if (dispensiblecontaineritem.emptyContents((Player)null, level, blockpos, (BlockHitResult)null, p_123562_)) {
-                dispensiblecontaineritem.checkExtraContent((Player)null, level, p_123562_, blockpos);
+        public ItemStack execute(BlockSource blockPos, ItemStack stack) {
+            DispensibleContainerItem dispensiblecontaineritem = (DispensibleContainerItem)stack.getItem();
+            BlockPos blockpos = blockPos.getPos().relative((Direction)blockPos.getBlockState().getValue(DispenserBlock.FACING));
+            Level level = blockPos.getLevel();
+            if (dispensiblecontaineritem.emptyContents((Player)null, level, blockpos, (BlockHitResult)null, stack)) {
+                dispensiblecontaineritem.checkExtraContent((Player)null, level, stack, blockpos);
                 return new ItemStack(Items.BUCKET);
             } else {
-                return this.defaultDispenseItemBehavior.dispense(p_123561_, p_123562_);
+                return this.defaultDispenseItemBehavior.dispense(blockPos, stack);
             }
         }
     };

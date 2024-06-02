@@ -15,24 +15,26 @@ import net.minecraftforge.registries.RegistryObject;
 import org.joml.Vector3f;
 
 public class ModFluidTypes {
-    // If I want to add a custom fluid texture, th
-    public static final ResourceLocation SOUP_STILL_RL = new ResourceLocation("block/lava_still");
-    public static final ResourceLocation SOUP_FLOWING_RL = new ResourceLocation("block/lava_flow");
-    public static final ResourceLocation IRON_SOUP_OVERLAY_RL = new ResourceLocation(PrimordialSoups.MODID, "misc/in_iron_soup");
 
-    public static final ResourceLocation STOCK_STILL_RL = new ResourceLocation("block/water_still");
-    public static final ResourceLocation STOCK_FLOWING_RL = new ResourceLocation("block/water_flow");
-    public static final ResourceLocation STOCK_OVERLAY_RL = new ResourceLocation(PrimordialSoups.MODID, "misc/in_iron_soup");
+    public static final ResourceLocation OVERLAY = new ResourceLocation(PrimordialSoups.MODID, "misc/in_soup");
 
     public static final DeferredRegister<FluidType> FLUID_TYPES =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, PrimordialSoups.MODID);
 
-    public static final RegistryObject<FluidType> IRON_SOUP_FLUID_TYPE = register("iron_soup_fluid", SOUP_STILL_RL,
-            SOUP_FLOWING_RL, IRON_SOUP_OVERLAY_RL, 0xF0601100);
+    public static final RegistryObject<FluidType> IRON_SOUP_FLUID_TYPE = registerSoup(0xF0601100);
 
-    public static final RegistryObject<FluidType> STOCK_FLUID_TYPE = register("stock_soup_fluid", STOCK_STILL_RL,
-            STOCK_FLOWING_RL, STOCK_OVERLAY_RL, 0x80AAAA00);
 
+    public static final RegistryObject<FluidType> STOCK_FLUID_TYPE = register("stock_soup_fluid",
+            new ResourceLocation("block/water_still"),
+            new ResourceLocation("block/water_flow"), OVERLAY, 0x80AAAA00);
+
+
+    public static RegistryObject<FluidType> registerSoup(int tintColor) {
+        return register("iron_soup_fluid", new ResourceLocation("block/lava_still"),
+                new ResourceLocation("block/lava_flow"),
+                OVERLAY,
+                tintColor);
+    }
 
 
     private static RegistryObject<FluidType> register(String name, ResourceLocation still, ResourceLocation flow,
