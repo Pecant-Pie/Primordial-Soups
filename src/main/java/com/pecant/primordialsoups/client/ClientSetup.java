@@ -17,10 +17,9 @@ import static com.pecant.primordialsoups.PrimordialSoups.MODID;
 @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientSetup {
 
-    @SubscribeEvent
-    public static void initClient(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerBlockEntityRenderer(Registration.CROCK_BLOCK_ENTITY.get(), CrockBlockRenderer::new);
-    }
+//    @SubscribeEvent
+//    public static void initClient(EntityRenderersEvent.RegisterRenderers event) {
+//    }
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
