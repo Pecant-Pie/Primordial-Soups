@@ -72,6 +72,10 @@ public class Registration {
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
             event.accept(CROCK_BLOCK_ITEM);
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(IRON_SOUP_BUCKET);
+            event.accept(STOCK_BUCKET);
+        }
     }
 
     public static void addDispenserBehavior(FMLCommonSetupEvent e) {
