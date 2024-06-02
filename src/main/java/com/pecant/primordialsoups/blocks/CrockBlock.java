@@ -1,41 +1,50 @@
 package com.pecant.primordialsoups.blocks;
 
 import com.pecant.primordialsoups.PrimordialSoups;
-import com.pecant.primordialsoups.Registration;
-import com.pecant.primordialsoups.fluid.ModFluidTypes;
-import com.pecant.primordialsoups.fluid.ModFluids;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.EntityBlock;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
-import net.minecraftforge.fluids.capability.templates.FluidTank;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 public class CrockBlock extends Block implements EntityBlock {
-//    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
+    public static final DirectionProperty FACING;
+
+    private static final int SIDE_THICKNESS = 2;
+    protected static final int FLOOR_LEVEL = 4;
+
+    private static final VoxelShape INSIDE = box(2.0, 14.0, 2.0, 14.0, 16.0, 14.0);
+    private static final VoxelShape SPOUT_NORTH = box(7.0, 14.0, 0.0, 9.0, 16.0, 2.0);
+    private static final VoxelShape SPOUT_SOUTH = box(7.0, 14.0, 14.0, 9.0, 16.0, 16.0);
+    private static final VoxelShape SPOUT_WEST = box(0.0, 14.0, 7.0, 2.0, 16.0, 9.0);
+    private static final VoxelShape SPOUT_EAST = box(14.0, 14.0, 7.0, 16.0, 16.0, 9.0);
+
+    private static final VoxelShape SHAPE_NORTH;
+    private static final VoxelShape SHAPE_SOUTH;
+    private static final VoxelShape SHAPE_WEST;
+    private static final VoxelShape SHAPE_EAST;
+
+
+
 
     public CrockBlock() {
         super(Properties.of()
@@ -46,6 +55,17 @@ public class CrockBlock extends Block implements EntityBlock {
 
     }
 
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(BlockStateProperties.HORIZONTAL_FACING)) {
+            case NORTH -> SHAPE_NORTH;
+            case SOUTH -> SHAPE_SOUTH;
+            case WEST -> SHAPE_WEST;
+            case EAST -> SHAPE_EAST;
+            default -> SHAPE_NORTH;
+        };
+    }
 
 
     @Override
@@ -113,9 +133,18 @@ public class CrockBlock extends Block implements EntityBlock {
 
     }
 
-//    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-//        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
-//    }
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState()
+                .setValue(BlockStateProperties.HORIZONTAL_FACING, context.getHorizontalDirection().getOpposite());
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
+        builder.add(BlockStateProperties.HORIZONTAL_FACING);
+    }
 
     @Nullable
     @Override
@@ -135,5 +164,14 @@ public class CrockBlock extends Block implements EntityBlock {
                 }
             };
         }
+    }
+
+    static {
+        FACING = BlockStateProperties.HORIZONTAL_FACING;
+        VoxelShape base = Shapes.join(Shapes.block(), INSIDE, BooleanOp.ONLY_FIRST);
+        SHAPE_NORTH = Shapes.join(base, SPOUT_NORTH, BooleanOp.ONLY_FIRST);
+        SHAPE_SOUTH = Shapes.join(base, SPOUT_SOUTH, BooleanOp.ONLY_FIRST);
+        SHAPE_WEST = Shapes.join(base, SPOUT_WEST, BooleanOp.ONLY_FIRST);
+        SHAPE_EAST = Shapes.join(base, SPOUT_EAST, BooleanOp.ONLY_FIRST);
     }
 }
