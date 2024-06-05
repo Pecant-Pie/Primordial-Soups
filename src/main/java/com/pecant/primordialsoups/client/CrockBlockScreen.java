@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidTank;
 import net.minecraftforge.fluids.capability.templates.FluidTank;
 import org.jetbrains.annotations.NotNull;
+import static com.pecant.primordialsoups.PrimordialSoups.LOGGER;
 
 public class CrockBlockScreen extends AbstractContainerScreen<CrockBlockMenu> {
 
@@ -40,7 +41,7 @@ public class CrockBlockScreen extends AbstractContainerScreen<CrockBlockMenu> {
 
 //        pGuiGraphics.fill(this.leftPos + 99, this.topPos + 14, this.leftPos + 117, this.topPos + 64, 0xFF404040);
 
-        FluidTank tank = this.menu.getBlockEntity().getInputFluidTank();
+        FluidTank tank = this.menu.getBlockEntity().getInputFluidOptional().orElse(null);
         FluidStack fluidStack = tank.getFluid();
         if(fluidStack.isEmpty())
             return;
@@ -90,6 +91,7 @@ public class CrockBlockScreen extends AbstractContainerScreen<CrockBlockMenu> {
         Component component = MutableComponent.create(fluidStack.getDisplayName().getContents())
                 .append(" (%s/%s mB)".formatted(tank.getFluidAmount(), tank.getCapacity()));
         pGuiGraphics.renderTooltip(this.font, component, pMouseX, pMouseY);
+        LOGGER.info("Rendered fluid tooltip!");
     }
 
     private static int getFluidHeight(IFluidTank tank) {

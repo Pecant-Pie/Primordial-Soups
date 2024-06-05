@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 901735194,
+    "separation": 3,
+    "spacing": 8,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "primordialsoups:stock_deposit_ring",
+      "weight": 1
+    }]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "primordialsoups:stock_deposit_ring",
+  "fallback": "minecraft:empty",
+
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "primordialsoups:stock_deposit_ring",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

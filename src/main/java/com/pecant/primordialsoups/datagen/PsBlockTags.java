@@ -23,6 +23,9 @@ public class PsBlockTags extends BlockTagsProvider {
         tag(BlockTags.FEATURES_CANNOT_REPLACE).add(Registration.CROCK_BLOCK.get());
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(Registration.CROCK_BLOCK.get());
         tag(BlockTags.NEEDS_IRON_TOOL).add(Registration.CROCK_BLOCK.get());
+
+        tag(BlockTags.WITHER_IMMUNE).add(Registration.STOCK_DEPOSIT_BLOCK.get());
+        tag(BlockTags.FEATURES_CANNOT_REPLACE).add(Registration.STOCK_DEPOSIT_BLOCK.get());
     }
 
 }

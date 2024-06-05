@@ -98,8 +98,8 @@ public class CrockBlock extends Block implements EntityBlock {
 
             BlockEntity be = pLevel.getBlockEntity(pPos);
             if (be instanceof CrockBlockEntity crockBlockEntity) {
-                FluidTank input = crockBlockEntity.getInputFluidTank();
-                FluidTank output = crockBlockEntity.getOutputFluidTank();
+                FluidTank input = crockBlockEntity.getInputFluidOptional().orElse(null);
+                FluidTank output = crockBlockEntity.getOutputFluidOptional().orElse(null);
                 FluidTank tank = null;
                 boolean drainItem = false;
                 if (iFluidHandlerItem.getFluidInTank(0).isFluidEqual(Registration.STOCK_BUCKET.get().getDefaultInstance())) {
@@ -130,18 +130,18 @@ public class CrockBlock extends Block implements EntityBlock {
                             if (drained == filled ) {
                                 tank.fill(iFluidHandlerItem.drain(drained, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
                                 pPlayer.setItemSlot(EquipmentSlot.MAINHAND, iFluidHandlerItem.getContainer());
-                                PrimordialSoups.LOGGER.info("drained fluid: ", iFluidHandlerItem.getFluidInTank(0).getFluid());
+                                PrimordialSoups.LOGGER.info("drained fluid: " + iFluidHandlerItem.getFluidInTank(0).getFluid());
                             }
                         }
                     }
                 // attempt to drain tank (either input or output) and fill item
                 } else {
-                    LOGGER.info("Filling item: " + item.getDisplayName().getContents());
                     int amountToDrain = tank.getFluidAmount();
                     int drained = tank.drain(amountToDrain, IFluidHandler.FluidAction.SIMULATE).getAmount();
                     if (drained > 0 && iFluidHandlerItem.isFluidValid(0, tank.getFluidInTank(0))) {
                         if (pPlayer.isCreative()) {
-                            iFluidHandlerItem.fill(tank.drain(drained, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.SIMULATE);
+                            int filled = iFluidHandlerItem.fill(tank.drain(drained, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE);
+                            iFluidHandlerItem.fill(tank.drain(filled, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.SIMULATE);
                         }
                         else {
                             int filled = iFluidHandlerItem.fill(tank.drain(drained, IFluidHandler.FluidAction.SIMULATE), IFluidHandler.FluidAction.SIMULATE);
@@ -149,6 +149,7 @@ public class CrockBlock extends Block implements EntityBlock {
                             if (filled > 0) {
                                 iFluidHandlerItem.fill(tank.drain(filled, IFluidHandler.FluidAction.EXECUTE), IFluidHandler.FluidAction.EXECUTE);
                                 pPlayer.setItemSlot(EquipmentSlot.MAINHAND, iFluidHandlerItem.getContainer());
+                                LOGGER.info("Filling item: " + item.getDisplayName().getContents() + " with fluid " + iFluidHandlerItem.getFluidInTank(0).getFluid());
                             }
                             else
                                 LOGGER.info("Failed to drain item");

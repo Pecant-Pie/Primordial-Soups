@@ -3,6 +3,7 @@ package com.pecant.primordialsoups.datagen;
 import com.pecant.primordialsoups.PrimordialSoups;
 import com.pecant.primordialsoups.Registration;
 import com.pecant.primordialsoups.blocks.CrockBlock;
+import com.pecant.primordialsoups.blocks.StockDepositBlock;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -29,7 +30,7 @@ public class PsBlockStates extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         registerCrock();
-
+        simpleBlock(Registration.STOCK_DEPOSIT_BLOCK.get());
     }
 
 

@@ -2,6 +2,8 @@ package com.pecant.primordialsoups;
 
 import com.pecant.primordialsoups.blocks.CrockBlock;
 import com.pecant.primordialsoups.blocks.CrockBlockEntity;
+import com.pecant.primordialsoups.blocks.StockDepositBlock;
+import com.pecant.primordialsoups.blocks.StockDepositBlockEntity;
 import com.pecant.primordialsoups.fluid.ModFluidTypes;
 import com.pecant.primordialsoups.fluid.ModFluids;
 import com.pecant.primordialsoups.menu.CrockBlockMenu;
@@ -41,6 +43,11 @@ public class Registration {
     public static final RegistryObject<BlockEntityType<CrockBlockEntity>> CROCK_BLOCK_ENTITY = BLOCK_ENTITIES.register("crock",
             () -> BlockEntityType.Builder.of(CrockBlockEntity::new, CROCK_BLOCK.get()).build(null));
 
+    public static final RegistryObject<StockDepositBlock> STOCK_DEPOSIT_BLOCK = BLOCKS.register("stock_deposit", () -> new StockDepositBlock());
+    public static final RegistryObject<Item> STOCK_DEPOSIT_BLOCK_ITEM = ITEMS.register("stock_deposit", () -> new BlockItem(STOCK_DEPOSIT_BLOCK.get(), new Item.Properties()));
+    public static final RegistryObject<BlockEntityType<StockDepositBlockEntity>> STOCK_DEPOSIT_BLOCK_ENTITY = BLOCK_ENTITIES.register("stock_deposit",
+            () -> BlockEntityType.Builder.of(StockDepositBlockEntity::new, STOCK_DEPOSIT_BLOCK.get()).build(null));
+
 
     public static final RegistryObject<LiquidBlock> IRON_SOUP_BLOCK = BLOCKS.register("iron_soup",
             () -> new LiquidBlock(ModFluids.SOURCE_IRON_SOUP, BlockBehaviour.Properties.copy(Blocks.LAVA).lightLevel(bs -> 0)));
@@ -70,8 +77,10 @@ public class Registration {
 
     public static void addCreative(BuildCreativeModeTabContentsEvent event)
     {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS)
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(CROCK_BLOCK_ITEM);
+            event.accept(STOCK_DEPOSIT_BLOCK_ITEM);
+        }
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
             event.accept(IRON_SOUP_BUCKET);
             event.accept(STOCK_BUCKET);

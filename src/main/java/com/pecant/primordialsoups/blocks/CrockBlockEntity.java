@@ -160,7 +160,7 @@ public class CrockBlockEntity extends BlockEntity implements MenuProvider {
         };
     }
 
-    private void sendUpdate() {
+    public void sendUpdate() {
         setChanged();
         if (this.level != null)
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), CrockBlock.UPDATE_ALL);

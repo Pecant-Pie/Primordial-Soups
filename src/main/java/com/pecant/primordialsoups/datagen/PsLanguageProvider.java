@@ -18,6 +18,7 @@ public class PsLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add(Registration.CROCK_BLOCK.get(), "Primordial Crock");
+        add(Registration.STOCK_DEPOSIT_BLOCK.get(), "Stock Deposit");
         add(Registration.IRON_SOUP_BUCKET.get(), "Bucket of Iron Soup");
         add(Registration.STOCK_BUCKET.get(), "Bucket of Stock");
         addFluidType("stock_fluid", "Stock"); // idk how to do this better

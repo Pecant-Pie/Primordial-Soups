@@ -17,8 +17,9 @@ public class PsLootTables extends VanillaBlockLoot {
 
     @Override
     protected void generate() {
-        dropOther(Registration.CROCK_BLOCK.get(), Blocks.AIR);
+        dropOther(Registration.STOCK_DEPOSIT_BLOCK.get(), Blocks.AIR);
         dropSelf(Registration.IRON_SOUP_BLOCK.get());
+        dropSelf(Registration.CROCK_BLOCK.get());
         dropSelf(Registration.STOCK_BLOCK.get());
     }
 

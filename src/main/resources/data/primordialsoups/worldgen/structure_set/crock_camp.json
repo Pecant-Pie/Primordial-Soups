@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 618359053,
+    "separation": 5,
+    "spacing": 10,
+    "spread_type": "triangular"
+  },
+  "structures": [
+    {
+      "structure": "primordialsoups:crock_camp",
+      "weight": 1
+    }]
+}
