@@ -107,7 +107,6 @@ public class CrockBlock extends Block implements EntityBlock {
                     drainItem = true;
                 } else if (iFluidHandlerItem.getFluidInTank(0).isFluidEqual(output.getFluid()) ||
                             iFluidHandlerItem.getFluidInTank(0).getAmount() == 0) {
-                    // TODO: make it so you can empty the input tank when the output tank is empty
                     drainItem = false;
                 }
 
@@ -116,6 +115,7 @@ public class CrockBlock extends Block implements EntityBlock {
                 else
                     tank = input;
 
+                // Attempt to fill input tank using fluid from item
                 if (drainItem) {
                     LOGGER.debug("attempting to drain item");
                     int amountToDrain = tank.getSpace();
@@ -134,6 +134,7 @@ public class CrockBlock extends Block implements EntityBlock {
                             }
                         }
                     }
+                // attempt to drain tank (either input or output) and fill item
                 } else {
                     LOGGER.info("Filling item: " + item.getDisplayName().getContents());
                     int amountToDrain = tank.getFluidAmount();
